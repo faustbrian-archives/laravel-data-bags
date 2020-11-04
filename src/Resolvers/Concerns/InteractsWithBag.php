@@ -20,7 +20,7 @@ trait InteractsWithBag
     private function resolveFromBag(array $bags, string $key, string $path)
     {
         if (Arr::has($bags, "$key.$path")) {
-            Arr::get($bags, "$key.$path");
+            return Arr::get($bags, "$key.$path");
         }
 
         return Arr::get($bags, "$key.*");
