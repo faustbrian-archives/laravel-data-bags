@@ -19,6 +19,8 @@ composer require konceiver/laravel-data-bags
 
 ## Usage
 
+### Registration & Resolving
+
 ``` php
 use Konceiver\DataBags\DataBag;
 
@@ -36,6 +38,40 @@ Route::get('/', function ($id) {
     // This will return ['title' => 'Placeholder']
     return DataBag::resolveByPath('meta');
 });
+```
+
+### Blade Component
+
+For convenience we offer a Blade component that will make it easy for you to include resolved data into views. We'll use meta tags as an example.
+
+#### Register bag
+
+``` php
+use Konceiver\DataBags\DataBag;
+
+DataBag::register('meta', [
+    '/' => [
+        'title'       => 'My Website',
+        'description' => 'Posts, Media & More',
+    ],
+]);
+
+Route::get('home', function ($id) {
+    return view('home');
+});
+```
+
+#### Create metatag component
+
+```blade
+<meta property="og:title" content="{{ $title }}" />
+<meta property="og:description" content="{{ $description }}">
+```
+
+#### Include data bag component
+
+```blade
+<x-data-bag key="meta" resolver="path" view="components.meta" />
 ```
 
 ## Testing
