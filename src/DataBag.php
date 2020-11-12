@@ -18,6 +18,7 @@ use Konceiver\DataBags\Resolvers\DomainResolver;
 use Konceiver\DataBags\Resolvers\GlobResolver;
 use Konceiver\DataBags\Resolvers\NameResolver;
 use Konceiver\DataBags\Resolvers\PathResolver;
+use Konceiver\DataBags\Resolvers\RegexResolver;
 
 final class DataBag
 {
@@ -66,5 +67,13 @@ final class DataBag
     public static function resolveByGlob(string $key)
     {
         return (new GlobResolver())->resolve(static::$bags, $key);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function resolveByRegex(string $key)
+    {
+        return (new RegexResolver())->resolve(static::$bags, $key);
     }
 }

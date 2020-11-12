@@ -73,3 +73,15 @@ it('should resolve via glob', function () {
 
     expect($this->call('GET', '/posts/hello-world')->json())->toBe(['title' => 'Hello World']);
 });
+
+it('should resolve via regex', function () {
+    DataBag::register('meta', [
+        '|(posts/hello-*)|' => [
+            'title' => 'Hello World',
+        ],
+    ]);
+
+    Route::get('/posts/hello-world', fn () => ResolverFactory::make('regex', 'meta'));
+
+    expect($this->call('GET', '/posts/hello-world')->json())->toBe(['title' => 'Hello World']);
+});
