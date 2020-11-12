@@ -15,6 +15,7 @@ namespace Konceiver\DataBags;
 
 use Konceiver\DataBags\Resolvers\ControllerResolver;
 use Konceiver\DataBags\Resolvers\DomainResolver;
+use Konceiver\DataBags\Resolvers\GlobResolver;
 use Konceiver\DataBags\Resolvers\NameResolver;
 use Konceiver\DataBags\Resolvers\PathResolver;
 
@@ -57,5 +58,13 @@ final class DataBag
     public static function resolveByPath(string $key)
     {
         return (new PathResolver())->resolve(static::$bags, $key);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function resolveByGlob(string $key)
+    {
+        return (new GlobResolver())->resolve(static::$bags, $key);
     }
 }

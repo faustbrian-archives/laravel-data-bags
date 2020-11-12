@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Konceiver\DataBags\Tests;
 
-use PHPUnit\Framework\TestCase as PHPUnit;
-
-abstract class TestCase extends PHPUnit
+abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
     //
 }

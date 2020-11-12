@@ -38,6 +38,10 @@ final class ResolverFactory
             return DataBag::resolveByPath($key);
         }
 
+        if ($resolver === 'glob') {
+            return DataBag::resolveByGlob($key);
+        }
+
         throw new InvalidArgumentException("Failed to find a resolver for [$resolver]");
     }
 }
