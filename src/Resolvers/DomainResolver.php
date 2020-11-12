@@ -13,15 +13,20 @@ declare(strict_types=1);
 
 namespace Konceiver\DataBags\Resolvers;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Konceiver\DataBags\Contracts\Resolver;
 
 class DomainResolver implements Resolver
 {
-    use Concerns\InteractsWithBag;
-
     public function resolve(array $bags, string $key)
     {
-        return $this->resolveFromBag($bags, $key, Route::current()->getDomain());
+        $path = Route::current()->getDomain();
+
+        if (! empty($bags[$key][$path])) {
+            return $bags[$key][$path];
+        }
+
+        return Arr::get($bags, "$key.*");
     }
 }

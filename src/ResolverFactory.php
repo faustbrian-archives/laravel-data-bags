@@ -22,26 +22,16 @@ final class ResolverFactory
      */
     public static function make(string $resolver, string $key)
     {
-        if ($resolver === 'controller') {
-            return DataBag::resolveByController($key);
+        try {
+            return [
+                'controller'  => fn (string $key) => DataBag::resolveByController($key),
+                'domain'      => fn (string $key) => DataBag::resolveByDomain($key),
+                'name'        => fn (string $key) => DataBag::resolveByName($key),
+                'path'        => fn (string $key) => DataBag::resolveByPath($key),
+                'glob'        => fn (string $key) => DataBag::resolveByGlob($key),
+            ][$resolver]($key);
+        } catch (\Throwable $th) {
+            throw new InvalidArgumentException("Failed to find a resolver for [$resolver]");
         }
-
-        if ($resolver === 'domain') {
-            return DataBag::resolveByDomain($key);
-        }
-
-        if ($resolver === 'name') {
-            return DataBag::resolveByName($key);
-        }
-
-        if ($resolver === 'path') {
-            return DataBag::resolveByPath($key);
-        }
-
-        if ($resolver === 'glob') {
-            return DataBag::resolveByGlob($key);
-        }
-
-        throw new InvalidArgumentException("Failed to find a resolver for [$resolver]");
     }
 }
